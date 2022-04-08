@@ -35,7 +35,7 @@ module "application_layer" {
 }
 
 module "banyan_connector" {
-  source = "./terraform-aws-banyan-connector"
+  source = "github.com/banyansecurity/terraform-aws-banyan-connector"
   api_key_secret = local.banyan_api_key
   subnet_id = module.foundation_layer.aws_subnet_private_id
   vpc_id = module.foundation_layer.aws_vpc_main_id
