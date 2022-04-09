@@ -41,3 +41,7 @@ variable "public_key" {
 variable "banyan_connector_sg" {
   default = ""
 }
+
+variable "key_pair_id" {
+  default = ""
+}
