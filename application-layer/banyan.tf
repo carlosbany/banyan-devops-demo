@@ -17,19 +17,19 @@ resource "banyan_service_web" "admin-console" {
   description    = "${var.name}-web"
   cluster        = var.cluster
   connector      = var.connector
-  domain         = var.name
+  domain         = "${var.name}-web.banyan-595.banyanops.com"
   port           = 443
-  backend_domain = aws_instance.instance.private_ip
-  backend_port   = 8443
+  backend_domain = var.connector
+  backend_port   = var.backend_port
   backend_tls    = true
 }
 
-resource "banyan_service_infra_ssh" "admin-console" {
+resource "banyan_service_infra_ssh" "admin-ssh" {
   name           = "${var.name}-ssh"
   description    = "${var.name}-ssh"
   cluster        = var.cluster
   connector      = var.connector
-  domain         = var.name
+  domain         = "${var.name}-ssh.banyan-595.banyanops.com"
   backend_port   = 22
   backend_domain = aws_instance.instance.private_ip
 }
@@ -37,7 +37,7 @@ resource "banyan_service_infra_ssh" "admin-console" {
 resource "banyan_policy_attachment" "infa-high-trust-any" {
   policy_id        = banyan_policy.infra-anyone-high.id
   attached_to_type = "service"
-  attached_to_id   = banyan_service_infra_ssh.admin-console.id
+  attached_to_id   = banyan_service_infra_ssh.admin-ssh.id
   is_enforcing     = true
 }
 
@@ -79,4 +79,34 @@ resource "banyan_policy_attachment" "example-high-trust-any" {
   attached_to_type = "service"
   attached_to_id   = banyan_service_web.admin-console.id
   is_enforcing     = true
+}
+
+resource "aws_security_group" "allow-connector" {
+  name        = "${var.name}-connector"
+  description = "Connector engress traffic (no ingress needed)"
+  vpc_id      = var.vpc_id
+
+  ingress {
+    security_groups   = [var.banyan_connector_sg]
+    from_port         = var.backend_port
+    to_port           = var.backend_port
+    protocol          = "tcp"
+    description       = "backend port"
+  }
+
+  ingress {
+    security_groups   = [var.banyan_connector_sg]
+    from_port         = 22
+    to_port           = 22
+    protocol          = "tcp"
+    description       = "SSH"
+  }
+
+  egress {
+    security_groups   = [var.banyan_connector_sg]
+    from_port         = 0
+    to_port           = 0
+    protocol          = "-1"
+    description       = "backend port"
+  }
 }
