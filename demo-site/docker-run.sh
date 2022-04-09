@@ -1,6 +1,4 @@
 #!/bin/bash -ex
-curl -L https://github.com/banyansecurity/banyan-devops-demo/releases/download/v0.05/release.tar.gz > release.tar.gz
-tar -xzvf release.tar.gz
 mv demo-site/html /html
 apt update -y
 apt install ca-certificates curl gnupg lsb-release
