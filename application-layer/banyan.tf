@@ -18,8 +18,7 @@ resource "banyan_service_web" "admin-console" {
   cluster        = var.cluster
   connector      = var.connector
   domain         = "${var.name}-web.banyan-595.banyanops.com"
-  port           = 443
-  backend_domain = var.connector
+  backend_domain = aws_instance.instance.private_ip
   backend_port   = var.backend_port
   backend_tls    = true
 }
@@ -88,15 +87,15 @@ resource "aws_security_group" "allow-connector" {
 
   ingress {
     security_groups   = [var.banyan_connector_sg]
-    from_port         = var.backend_port
-    to_port           = var.backend_port
+    from_port         = 0
+    to_port           = 0
     protocol          = "tcp"
     description       = "backend port"
   }
 
   ingress {
     security_groups   = [var.banyan_connector_sg]
-    from_port         = 22
+    from_port         = 0
     to_port           = 22
     protocol          = "tcp"
     description       = "SSH"
