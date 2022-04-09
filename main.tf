@@ -34,11 +34,11 @@ module "application_layer" {
   subnet = module.foundation_layer.aws_subnet_private_id
   connector = module.banyan_connector.connector_name
   banyan_connector_sg = module.banyan_connector.sg
-  banyan_api_key = local.connector_api_key
+  banyan_api_key = local.banyan_api_key
   banyan_host = local.banyan_host
   key_name = local.key_name
   public_key = local.public_key
-  backend_port = 8443
+  backend_port = 80
   vpc_id = module.foundation_layer.aws_vpc_main_id
 }
 
