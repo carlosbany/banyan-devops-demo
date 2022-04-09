@@ -20,7 +20,7 @@ resource "banyan_service_web" "admin-console" {
   domain         = "${var.name}-web.banyan-595.banyanops.com"
   backend_domain = aws_instance.instance.private_ip
   backend_port   = var.backend_port
-  backend_tls    = true
+  backend_tls    = false
 }
 
 resource "banyan_service_infra_ssh" "admin-ssh" {
@@ -89,7 +89,7 @@ resource "aws_security_group" "allow-connector" {
     security_groups   = [var.banyan_connector_sg]
     from_port         = 0
     to_port           = 0
-    protocol          = "tcp"
+    protocol          = -1
     description       = "backend port"
   }
 
@@ -102,10 +102,10 @@ resource "aws_security_group" "allow-connector" {
   }
 
   egress {
-    security_groups   = [var.banyan_connector_sg]
     from_port         = 0
     to_port           = 0
     protocol          = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
     description       = "backend port"
   }
 }
