@@ -14,7 +14,6 @@ jobs:
           type: 'tar'
           path: 'demo-site'
           filename: 'release.tar.gz'
-          exclusions: '*.git* /*node_modules/* .editorconfig'
       - name: Upload Release
         uses: ncipollo/release-action@v1
         with:
