@@ -1,4 +1,4 @@
-#!/bin/bash -ex
+#!/bin/bash
 mv demo-site/html /html
 apt update -y
 apt install ca-certificates curl gnupg lsb-release
@@ -9,7 +9,6 @@ apt install -y docker-ce docker-ce-cli containerd.io
 systemctl enable docker.service
 systemctl enable containerd.service
 docker pull nginx:1.20.2
-sh demo-site/docker-run.sh
 echo "let name = \"$HOSTNAME\";" > /html/env.js
 echo "document.write(name);" >> /html/env.js
 docker run -v /html:/usr/share/nginx/html:ro -p 80:80 nginx:1.20.2
