@@ -13,8 +13,8 @@ systemctl enable containerd.service
 docker pull nginx:1.20.2
 export INSTANCE_ID="$(jq '."ds"."dynamic"."instance-identity"."document"."instanceId"' /run/cloud-init/instance-data.json)"
 export PRIVATE_IP="$(jq '."ds"."dynamic"."instance-identity"."document"."privateIp"' /run/cloud-init/instance-data.json)"
-echo "let name = \"$INSTANCE_ID\";" > /html/env.js
-echo "let ipaddress = \"$PRIVATE_IP\";" >> /html/env.js
+echo "let hostname = $INSTANCE_ID;" > /html/env.js
+echo "let ipaddress = $PRIVATE_IP;" >> /html/env.js
 echo "document.write(name);" >> /html/env.js
 echo "document.write(ipaddress);" >> /html/env.js
 docker run -v /html:/usr/share/nginx/html:ro -p 80:80 nginx:1.20.2
