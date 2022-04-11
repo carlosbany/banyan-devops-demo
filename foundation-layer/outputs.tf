@@ -9,3 +9,7 @@ output "aws_subnet_private_id" {
 output "aws_subnet_public_id" {
   value = aws_subnet.public.id
 }
+
+output "connector_sg" {
+  value = module.banyan_connector.sg
+}
