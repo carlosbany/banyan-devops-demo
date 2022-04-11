@@ -4,7 +4,7 @@ resource "banyan_service_web" "web" {
   connector      = "connector2"
   domain         = "${var.name}-web.banyan-595.banyanops.com"
   backend_domain = aws_instance.instance.private_ip
-  backend_port   = var.backend_port
+  backend_port   = 80
   backend_tls    = false
 }
 

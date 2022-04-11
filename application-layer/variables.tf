@@ -14,21 +14,18 @@ variable "banyan_host" {
   default = "https://team.console.banyanops.com"
 }
 
+variable "key_name" {
+  default = ""
+}
+
+variable "public_key" {
+  default = ""
+}
+
 variable vpc_id {
   type = string
 }
 
 variable subnet_id {
   type = string
-}
-
-variable "key_pair_id" {
-  default = ""
-}
-
-variable "connector_sg" {
-  default = ""
-}
-variable "backend_port" {
-  default = ""
 }
