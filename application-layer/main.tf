@@ -55,20 +55,19 @@ resource "aws_instance" "instance" {
     "sudo sh demo-site/docker-run.sh\n"
   ]))
 
-  vpc_security_group_ids = [var.default_sg]
+  vpc_security_group_ids = [aws_security_group.allow-connector.id]
 }
 
 resource "aws_security_group" "allow-connector" {
   name        = "${var.name}-connector"
-  description = "Connector engress traffic (no ingress needed)"
+  description = "Allow all traffic from banyan connector"
   vpc_id      = var.vpc_id
 
   ingress {
-    security_groups   = [var.default_sg]
+    security_groups   = [var.connector_sg]
     from_port         = 0
     to_port           = 0
-    protocol          = "tcp"
+    protocol          = "all"
     description       = "backend port"
   }
-
 }

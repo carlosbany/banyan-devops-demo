@@ -26,7 +26,7 @@ variable "key_pair_id" {
   default = ""
 }
 
-variable "default_sg" {
+variable "connector_sg" {
   default = ""
 }
 variable "backend_port" {
