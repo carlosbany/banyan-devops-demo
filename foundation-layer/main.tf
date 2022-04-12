@@ -1,5 +1,9 @@
 terraform {
   required_providers {
+    banyan = {
+      source  = "github.com/banyansecurity/banyan"
+      version = "0.6.1"
+    }
     aws = {
       source  = "hashicorp/aws"
       version = "~> 3.0"
@@ -8,6 +12,11 @@ terraform {
 }
 provider "aws" {
   region = var.region
+}
+
+provider "banyan" {
+  api_token = var.banyan_api_key
+  host      = var.banyan_host
 }
 
 resource "aws_vpc" "main" {

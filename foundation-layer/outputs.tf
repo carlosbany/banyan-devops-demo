@@ -13,3 +13,7 @@ output "aws_subnet_public_id" {
 output "connector_sg" {
   value = module.banyan_connector.sg
 }
+
+output "banyan_connector" {
+  value = module.banyan_connector.connector_name
+}

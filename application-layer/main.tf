@@ -2,7 +2,7 @@ terraform {
   required_providers {
     banyan = {
       source  = "github.com/banyansecurity/banyan"
-      version = "0.6.0"
+      version = "0.6.1"
     }
     aws = {
       source  = "hashicorp/aws"
@@ -24,21 +24,21 @@ resource "aws_key_pair" "ssh-key" {
   public_key = var.public_key
 }
 
-data "aws_ami" "ubuntu" {
+data "aws_ami" "ubuntu-docker" {
   most_recent = true
   filter {
     name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
+    values = ["ubuntu-xenial-docker-stable-latest*"]
   }
   filter {
     name   = "virtualization-type"
     values = ["hvm"]
   }
-  owners = ["099720109477"] # Canonical
+  owners = ["654814900965"] # Canonical
 }
 
 resource "aws_instance" "instance" {
-  ami           = data.aws_ami.ubuntu.id
+  ami           = data.aws_ami.ubuntu-docker.id
   instance_type = "t3.micro"
   subnet_id = data.terraform_remote_state.foundation_layer.outputs.aws_subnet_private_id
   key_name = aws_key_pair.ssh-key.id
@@ -47,9 +47,9 @@ resource "aws_instance" "instance" {
   }
   user_data = join("", concat([
     "#!/bin/bash -ex\n",
-    "curl -L https://github.com/banyansecurity/banyan-devops-demo/releases/download/v0.16/release.tar.gz > release.tar.gz\n",
-    "sudo tar -xzvf release.tar.gz\n",
-    "sudo sh demo-site/docker-run.sh\n"
+    "INSTANCE_ID=\"${var.name}\"\n",
+    "export PRIVATE_IP=\"$(hostname -i | awk '{print $3}')\"\n",
+    "docker run -e INSTANCE_ID -e PRIVATE_IP -p 80:80 gcr.io/banyan-pub/demo-site\n"
   ]))
   vpc_security_group_ids = [aws_security_group.allow-connector.id]
 }

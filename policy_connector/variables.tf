@@ -1,11 +1,3 @@
-variable name {
-  type = string
-}
-
-variable region {
-  type = string
-}
-
 variable "banyan_api_key" {
   default = ""
 }
