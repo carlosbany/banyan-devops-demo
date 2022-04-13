@@ -4,14 +4,7 @@ terraform {
       source  = "github.com/banyansecurity/banyan"
       version = "0.6.1"
     }
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 3.0"
-    }
   }
-}
-provider "aws" {
-  region = var.region
 }
 
 provider "banyan" {

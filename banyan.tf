@@ -1,18 +1,18 @@
 resource "banyan_service_web" "web" {
-  name           = "${var.name}-web"
-  description    = "${var.name}-web"
-  connector      = data.terraform_remote_state.foundation_layer.outputs.banyan_connector
-  domain         = "${var.name}-web.banyan-595.banyanops.com"
+  name           = "${local.name}-web"
+  description    = "${local.name}-web"
+  connector      = module.foundation_layer.connector_name
+  domain         = "${local.name}-web.banyan-595.banyanops.com"
   backend_domain = aws_instance.instance.private_ip
   backend_port   = 80
   backend_tls    = false
 }
 
 resource "banyan_service_infra_ssh" "ssh" {
-  name           = "${var.name}-ssh"
-  description    = "${var.name}-ssh"
-  connector      = data.terraform_remote_state.foundation_layer.outputs.banyan_connector
-  domain         = "${var.name}-ssh.banyan-595.banyanops.com"
+  name           = "${local.name}-ssh"
+  description    = "${local.name}-ssh"
+  connector      = module.foundation_layer.connector_name
+  domain         = "${local.name}-ssh.banyan-595.banyanops.com"
   backend_port   = 22
   backend_domain = aws_instance.instance.private_ip
 }

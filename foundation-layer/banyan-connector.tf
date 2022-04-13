@@ -1,8 +1,10 @@
 module "banyan_connector" {
-  source = "/Users/matt/Documents/git/terraform-aws-banyan-connector"
+  source = "./connector"
   subnet_id = aws_subnet.public.id
   vpc_id = aws_vpc.main.id
-  connector_name = "newconnector"
+  connector_name = "asdfasdf"
   management_cidrs = ["0.0.0.0/0"]
-  banyan_api_key = "xGB4vs0w12r1J2SxnmJXuceFzBvrT9Hrn-ptViZ2aYA"
+  banyan_api_key = var.banyan_api_key
+  banyan_host = var.banyan_host
+  region = var.region
 }

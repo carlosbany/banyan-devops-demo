@@ -14,6 +14,6 @@ output "connector_sg" {
   value = module.banyan_connector.sg
 }
 
-output "banyan_connector" {
+output "connector_name" {
   value = module.banyan_connector.connector_name
 }

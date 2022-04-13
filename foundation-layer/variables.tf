@@ -11,5 +11,9 @@ variable "banyan_api_key" {
 }
 
 variable "banyan_host" {
-  default = "https://team.console.banyanops.com"
+  default = "https://team.console.banyanops.com/"
+}
+
+variable "connector_name" {
+  default = ""
 }

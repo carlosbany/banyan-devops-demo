@@ -1,4 +1,4 @@
 region = "us-west-2"
-name =
+name = "live-demo"
 banyan_host = "https://team.console.banyanops.com/"
-connector_api_key =
+banyan_api_key = "xGB4vs0w12r1J2SxnmJXuceFzBvrT9Hrn-ptViZ2aYA"
