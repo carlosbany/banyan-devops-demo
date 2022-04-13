@@ -17,3 +17,15 @@ variable "banyan_host" {
 variable "connector_name" {
   default = ""
 }
+
+variable "vpc_id" {
+  default = ""
+}
+
+variable "private_subnet_cidr_block" {
+  default = ""
+}
+
+variable "nat_id" {
+  default = ""
+}

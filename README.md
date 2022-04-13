@@ -1,6 +1,4 @@
-## setup
-
-change `main.tf` locals to match your api key and ssh key
+## Setup
 
 clone beta branch `https://github.com/banyansecurity/terraform-provider-banyan/tree/beta`
 
@@ -12,8 +10,10 @@ this installs the provider beta version locally
 
 change back to this projects directory
 
-ensure you have exported your aws credential and have a TEAM EDITION connector api key and admin api key set in `main.tf` `locals` 
+ensure you have exported your aws credentials (select programmatic access after aws login from okta) and have a TEAM EDITION org with an admin api key 
 
+change `locals.tf` variables to match your AWS configuration
+#### Example 
 ```hcl
 locals {
   region = "us-west-2"
@@ -24,8 +24,10 @@ locals {
   key_name   = "WHATEVER KEY NAME YOU WANT TO CREATE"
   public_key = "your public key i.e. ~/.ssh/id_rsa.pub"
 }
-
 ```
+
+## Usage
+
 run `terraform apply`
 
-this should result in a new vpc with a public and private subnet with a banyan connector in the public subnet and an instance with a demo web service and ssh service appearing in the console for everyone in the org
+this should result in a public and private subnet with a banyan connector in the public subnet and an instance with a demo web service and ssh service appearing in the console for everyone in the org
